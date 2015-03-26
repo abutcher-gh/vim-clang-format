@@ -237,6 +237,19 @@ function! clang_format#enable_format_on_insert()
         autocmd InsertLeave <buffer> call s:format_inserted_area()
     augroup END
 endfunction
+
+function! clang_format#toggle_format_on_insert()
+    let g:clang_format#auto_format_on_insert_leave = !g:clang_format#auto_format_on_insert_leave
+    if g:clang_format#auto_format_on_insert_leave
+        call clang_format#enable_format_on_insert()
+        echo "Auto clang-format on change: enabled"
+    else
+        augroup plugin-clang-format-auto-format-insert
+            autocmd!
+        augroup END
+        echo "Auto clang-format on change: disabled"
+    endif
+endfunction
 " }}}
 
 " toggle auto formatting {{{
